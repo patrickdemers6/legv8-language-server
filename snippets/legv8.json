@@ -1,0 +1,185 @@
+{
+  "set register to": {
+    "prefix": "sreg",
+    "body": ["ADD ${1:dest reg}, XZR, $2", "$3"]
+  },
+  "increment register": {
+    "prefix": "increg",
+    "body": ["ADDI ${1:dest reg}, ${1}, #1", "$2"]
+  },
+  "decrement register": {
+    "prefix": "decreg",
+    "body": ["SUBI ${1:dest reg}, ${1}, #1", "$2"]
+  },
+  "copy register content to another register": {
+    "prefix": "copy",
+    "body": ["ORR ${1:dest reg}, XZR, ${2:reg to copy from}", "$3"],
+    "description": "equivalent to 'MOV Xd, Xm'"
+  },
+  "clear register content": {
+    "prefix": "clearReg",
+    "body": ["EOR ${1:target reg}, $1, $1", "$2"],
+    "description": "equivalent of CLEAR. It clears the content of a target register"
+  },
+  "increment offset by 8 bits": {
+    "prefix": "inc8",
+    "body": ["ADDI ${1:offset to increment}, $1, #8"],
+    "description": "incrementing according to offset allignment standard, in order to properly traverse through an array"
+  },
+
+  "store 2 registers to save on stack": {
+    "prefix": "st2",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #16 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #8] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #0] //store register 1",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg1, [X28, #0] //restore $reg1",
+      "LDUR X30, [X28, #8] //restore X30",
+      "ADDI X28, X28, #16  //restore previous space on stack"
+    ],
+    "description": "use this to save 2 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 3 registers to save on stack": {
+    "prefix": "st3",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #24 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #16] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #8] //store register 1",
+      "STUR $reg2, [X28, #0] //store register 2",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg2, [X28, #0] //restore $reg2",
+      "LDUR $reg1, [X28, #8] //restore $reg1",
+      "LDUR X30, [X28, #16] //restore X30",
+      "ADDI X28, X28, #24 //restore previous space on stack"
+    ],
+    "description": "use this to save 3 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 4 registers to save on stack": {
+    "prefix": "st4",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #32 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #24] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #16] //store register 1",
+      "STUR $reg2, [X28, #8] //store register 2",
+      "STUR $reg3, [X28, #0] //store register 3",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg3, [X28, #0] //restore $reg3",
+      "LDUR $reg2, [X28, #8] //restore $reg2",
+      "LDUR $reg1, [X28, #16] //restore $reg1",
+      "LDUR X30, [X28, #24] //restore X30",
+      "ADDI X28, X28, #32  //restore previous space on stack"
+    ],
+    "description": "use this to save 4 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 5 registers to save on stack": {
+    "prefix": "st5",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #40 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #32] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #24] //store register 1",
+      "STUR $reg2, [X28, #16] //store register 2",
+      "STUR $reg3, [X28, #8] //store register 3",
+      "STUR $reg4, [X28, #0] //store register 4",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg4, [X28, #0] //restore $reg4",
+      "LDUR $reg3, [X28, #8] //restore $reg3",
+      "LDUR $reg2, [X28, #16] //restore $reg2",
+      "LDUR $reg1, [X28, #24] //restore $reg1",
+      "LDUR X30, [X28, #32] //restore X30",
+      "ADDI X28, X28, #40  //restore previous space on stack"
+    ],
+    "description": "use this to save 5 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 6 registers to save on stack": {
+    "prefix": "st6",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #48 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #40] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #32] //store register 1",
+      "STUR $reg2, [X28, #24] //store register 2",
+      "STUR $reg3, [X28, #16] //store register 3",
+      "STUR $reg4, [X28, #8] //store register 4",
+      "STUR $reg5, [X28, #0] //store register 5",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg5, [X28, #0] //restore $reg5",
+      "LDUR $reg4, [X28, #8] //restore $reg4",
+      "LDUR $reg3, [X28, #16] //restore $reg3",
+      "LDUR $reg2, [X28, #24] //restore $reg2",
+      "LDUR $reg1, [X28, #32] //restore $reg1",
+      "LDUR X30, [X28, #40] //restore X30",
+      "ADDI X28, X28, #48  //restore previous space on stack"
+    ],
+    "description": "use this to save 6 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 7 registers to save on stack": {
+    "prefix": "st7",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #56 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #48] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #40] //store register 1",
+      "STUR $reg2, [X28, #32] //store register 2",
+      "STUR $reg3, [X28, #24] //store register 3",
+      "STUR $reg4, [X28, #16] //store register 4",
+      "STUR $reg5, [X28, #8] //store register 5",
+      "STUR $reg6, [X28, #0] //store register 6",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg6, [X28, #0] //restore $reg6",
+      "LDUR $reg5, [X28, #8] //restore $reg5",
+      "LDUR $reg4, [X28, #16] //restore $reg4",
+      "LDUR $reg3, [X28, #24] //restore $reg3",
+      "LDUR $reg2, [X28, #32] //restore $reg2",
+      "LDUR $reg1, [X28, #40] //restore $reg1",
+      "LDUR X30, [X28, #48] //restore X30",
+      "ADDI X28, X28, #56  //restore previous space on stack"
+    ],
+    "description": "use this to save 7 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  },
+  "store 8 registers to save on stack": {
+    "prefix": "st8",
+    "body": [
+      "//storing registers in stack before changing them",
+      "SUBI X28, X28, #64 //make room on stack (X28) for 2 registers",
+      "STUR X30, [X28, #56] //store Return adress (X30) of procedure",
+      "STUR $reg1, [X28, #48] //store register 1",
+      "STUR $reg2, [X28, #40] //store register 2",
+      "STUR $reg3, [X28, #32] //store register 3",
+      "STUR $reg4, [X28, #24] //store register 4",
+      "STUR $reg5, [X28, #16] //store register 5",
+      "STUR $reg6, [X28, #8] //store register 6",
+      "STUR $reg7, [X28, #0] //store register 7",
+      "//body of the procedure",
+      "$body",
+      "//restoring saved registers from stack before function return (in a LIFO manner)",
+      "LDUR $reg7, [X28, #0] //restore $reg7",
+      "LDUR $reg6, [X28, #8] //restore $reg6",
+      "LDUR $reg5, [X28, #16] //restore $reg5",
+      "LDUR $reg4, [X28, #24] //restore $reg4",
+      "LDUR $reg3, [X28, #32] //restore $reg3",
+      "LDUR $reg2, [X28, #40] //restore $reg2",
+      "LDUR $reg1, [X28, #48] //restore $reg1",
+      "LDUR X30, [X28, #56] //restore X30",
+      "ADDI X28, X28, #64  //restore previous space on stack"
+    ],
+    "description": "use this to save 8 registers in the stack pointer, including the return address of the function/procedure (where the function was called)"
+  }
+}
+
