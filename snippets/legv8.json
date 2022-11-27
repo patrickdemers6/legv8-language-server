@@ -2,21 +2,31 @@
   "set register": {
     "prefix": "sreg",
     "body": ["ADD ${1:Rd}, XZR, ${2:Rm}", "$3"],
-    "description": "R[1] = R[2]"
+    "description": "R[1] = R[2]. Set one register (Rd) to the value of another (Rm)."
+  },
+  "increment register (immediate)": {
+    "prefix": "addi",
+    "body": ["ADDI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
+    "description": "R[1] = R[1] + R[2] Increment one register (Rd) with the value (in bits) of the immediate (Imt)"
+  },
+  "decrement register (immediate)": {
+    "prefix": "subi",
+    "body": ["SUBI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
+    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value (in bits) of the immediate (Imt)"
   },
   "increment register": {
-    "prefix": "ireg",
-    "body": ["ADDI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
-    "description": "R[1] = R[1] + R[2]"
+    "prefix": "add",
+    "body": ["ADD ${1:Rd}, ${1}, ${2:Rm}", "$3"],
+    "description": "R[1] = R[1] + R[2]. Increment one register (Rd) with the value of another register (Rm)"
   },
   "decrement register": {
-    "prefix": "dreg",
-    "body": ["SUBI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
-    "description": "R[1] = R[1] - R[2]"
+    "prefix": "sub",
+    "body": ["SUB ${1:Rd}, ${1}, ${2:Rm}", "$3"],
+    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value of another register (Rm)"
   },
 
-  "stack manipulation with 2 registers": {
-    "prefix": "st2",
+  "stack manipulation with 1 register": {
+    "prefix": "stk1",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #16 // make room on stack (SP) for 2 registers",
@@ -29,10 +39,10 @@
       "LDUR LR, [SP, #8] // restore LR",
       "ADDI SP, SP, #16  // restore previous space on stack"
     ],
-    "description": "use this to save 2 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 2 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 3 registers": {
-    "prefix": "st3",
+  "stack manipulation with 2 registers": {
+    "prefix": "stk2",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #24 // make room on stack (SP) for 2 registers",
@@ -47,10 +57,10 @@
       "LDUR LR, [SP, #16] // restore LR",
       "ADDI SP, SP, #24 // restore previous space on stack"
     ],
-    "description": "use this to save 3 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 3 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 4 registers": {
-    "prefix": "st4",
+  "stack manipulation with 3 registers": {
+    "prefix": "stk3",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #32 // make room on stack (SP) for 2 registers",
@@ -67,10 +77,10 @@
       "LDUR LR, [SP, #24] // restore LR",
       "ADDI SP, SP, #32  // restore previous space on stack"
     ],
-    "description": "use this to save 4 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 4 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 5 registers": {
-    "prefix": "st5",
+  "stack manipulation with 4 registers": {
+    "prefix": "stk4",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #40 // make room on stack (SP) for 2 registers",
@@ -89,10 +99,10 @@
       "LDUR LR, [SP, #32] // restore LR",
       "ADDI SP, SP, #40  // restore previous space on stack"
     ],
-    "description": "use this to save 5 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 5 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 6 registers": {
-    "prefix": "st6",
+  "stack manipulation with 5 registers": {
+    "prefix": "stk5",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #48 // make room on stack (SP) for 2 registers",
@@ -113,10 +123,10 @@
       "LDUR LR, [SP, #40] // restore LR",
       "ADDI SP, SP, #48  // restore previous space on stack"
     ],
-    "description": "use this to save 6 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 6 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 7 registers": {
-    "prefix": "st7",
+  "stack manipulation with 6 registers": {
+    "prefix": "stk6",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #56 // make room on stack (SP) for 2 registers",
@@ -139,10 +149,10 @@
       "LDUR LR, [SP, #48] // restore LR",
       "ADDI SP, SP, #56  // restore previous space on stack"
     ],
-    "description": "use this to save 7 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 7 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
-  "stack manipulation with 8 registers": {
-    "prefix": "st8",
+  "stack manipulation with 7 registers": {
+    "prefix": "stk7",
     "body": [
       "// storing registers in stack before changing them",
       "SUBI SP, SP, #64 // make room on stack (SP) for 2 registers",
@@ -167,26 +177,26 @@
       "LDUR LR, [SP, #56] // restore LR",
       "ADDI SP, SP, #64  // restore previous space on stack"
     ],
-    "description": "use this to save 8 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+    "description": "Use this to save 8 registers in the Stack, including the return address of the procedure (where the procedure was called)"
   },
   "incremental for loop": {
-    "prefix": "ifl",
+    "prefix": "for_incremental",
     "body": [
-      "${1:loop name}:",
+      "${1:loop name}_loop:",
       "//comparing pointer to array length; if equal then exit",
-      "SUB ${2:temp}, ${3:counter}, ${4:arr_len}",
-      "CBZ $2, ${5:exit loop} ",
+      "SUBS XZR, ${2:counter}, ${3:upper_limit}",
+      "B.GE ${1}_loop_exit",
       "//loop body",
       " ",
-      "// increment pointer",
-      "ADDI $3, $3, #${6:Imt}",
-      "B $1",
-      "${5}:"
+      "// increment counter ($2) by $4",
+      "ADDI $3, $3, #${4:increment_amount}",
+      "B $1_loop",
+      "${1}_loop_exit:"
     ],
-    "description": "creates an incremental for loop. Obs: the register for the loop counter along with the length of the array are not created with the snippet, so they must be set"
+    "description": "Creates a for loop from counter to upper_limit. for (; counter < upper_limit; counter += increment_amount); Note: the counter and array size must be initialized before the loop."
   },
   "decremental for loop": {
-    "prefix": "dfl",
+    "prefix": "for_decremental",
     "body": [
       "${1:loop name}:",
       "//comparing pointer to 0; if equal then exit",
@@ -198,11 +208,17 @@
       "B $1",
       "${3}:"
     ],
-    "description": "creates an incremental for loop. Obs: the register for the loop counter is not created with the snippet, so they must be set"
+    "description": "Creates a for loop from Counter to 0. Note: the counter must be initialized before the loop"
   },
+
   "return statement": {
-    "prefix": "rtn",
+    "prefix": "br",
     "body": ["BR LR"],
-    "description": ""
+    "description": "returns to the caller (LR)"
+  },
+  "call procedure": {
+    "prefix": "bl",
+    "body": ["BL ${1:procedure name}"],
+    "description": "calls a procedure with the given name"
   }
 }
