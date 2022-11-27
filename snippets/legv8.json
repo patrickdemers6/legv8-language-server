@@ -1,0 +1,224 @@
+{
+  "set register": {
+    "prefix": "sreg",
+    "body": ["ADD ${1:Rd}, XZR, ${2:Rm}", "$3"],
+    "description": "R[1] = R[2]. Set one register (Rd) to the value of another (Rm)."
+  },
+  "increment register (immediate)": {
+    "prefix": "addi",
+    "body": ["ADDI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
+    "description": "R[1] = R[1] + R[2] Increment one register (Rd) with the value (in bits) of the immediate (Imt)"
+  },
+  "decrement register (immediate)": {
+    "prefix": "subi",
+    "body": ["SUBI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
+    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value (in bits) of the immediate (Imt)"
+  },
+  "increment register": {
+    "prefix": "add",
+    "body": ["ADD ${1:Rd}, ${1}, ${2:Rm}", "$3"],
+    "description": "R[1] = R[1] + R[2]. Increment one register (Rd) with the value of another register (Rm)"
+  },
+  "decrement register": {
+    "prefix": "sub",
+    "body": ["SUB ${1:Rd}, ${1}, ${2:Rm}", "$3"],
+    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value of another register (Rm)"
+  },
+
+  "stack manipulation with 1 register": {
+    "prefix": "stk1",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #16 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #8] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #0] // store $reg1",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg1, [SP, #0] // restore $reg1",
+      "LDUR LR, [SP, #8] // restore LR",
+      "ADDI SP, SP, #16  // restore previous space on stack"
+    ],
+    "description": "Use this to save 2 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 2 registers": {
+    "prefix": "stk2",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #24 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #16] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #8] // store $reg1",
+      "STUR $reg2, [SP, #0] // store $reg2",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg2, [SP, #0] // restore $reg2",
+      "LDUR $reg1, [SP, #8] // restore $reg1",
+      "LDUR LR, [SP, #16] // restore LR",
+      "ADDI SP, SP, #24 // restore previous space on stack"
+    ],
+    "description": "Use this to save 3 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 3 registers": {
+    "prefix": "stk3",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #32 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #24] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #16] // store $reg1",
+      "STUR $reg2, [SP, #8] // store $reg2",
+      "STUR $reg3, [SP, #0] // store $reg3",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg3, [SP, #0] // restore $reg3",
+      "LDUR $reg2, [SP, #8] // restore $reg2",
+      "LDUR $reg1, [SP, #16] // restore $reg1",
+      "LDUR LR, [SP, #24] // restore LR",
+      "ADDI SP, SP, #32  // restore previous space on stack"
+    ],
+    "description": "Use this to save 4 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 4 registers": {
+    "prefix": "stk4",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #40 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #32] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #24] // store $reg1",
+      "STUR $reg2, [SP, #16] // store $reg2",
+      "STUR $reg3, [SP, #8] // store $reg3",
+      "STUR $reg4, [SP, #0] // store $reg4",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg4, [SP, #0] // restore $reg4",
+      "LDUR $reg3, [SP, #8] // restore $reg3",
+      "LDUR $reg2, [SP, #16] // restore $reg2",
+      "LDUR $reg1, [SP, #24] // restore $reg1",
+      "LDUR LR, [SP, #32] // restore LR",
+      "ADDI SP, SP, #40  // restore previous space on stack"
+    ],
+    "description": "Use this to save 5 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 5 registers": {
+    "prefix": "stk5",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #48 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #40] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #32] // store $reg1",
+      "STUR $reg2, [SP, #24] // store $reg2",
+      "STUR $reg3, [SP, #16] // store $reg3",
+      "STUR $reg4, [SP, #8] // store $reg4",
+      "STUR $reg5, [SP, #0] // store $reg5",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg5, [SP, #0] // restore $reg5",
+      "LDUR $reg4, [SP, #8] // restore $reg4",
+      "LDUR $reg3, [SP, #16] // restore $reg3",
+      "LDUR $reg2, [SP, #24] // restore $reg2",
+      "LDUR $reg1, [SP, #32] // restore $reg1",
+      "LDUR LR, [SP, #40] // restore LR",
+      "ADDI SP, SP, #48  // restore previous space on stack"
+    ],
+    "description": "Use this to save 6 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 6 registers": {
+    "prefix": "stk6",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #56 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #48] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #40] // store $reg1",
+      "STUR $reg2, [SP, #32] // store $reg2",
+      "STUR $reg3, [SP, #24] // store $reg3",
+      "STUR $reg4, [SP, #16] // store $reg4",
+      "STUR $reg5, [SP, #8] // store $reg5",
+      "STUR $reg6, [SP, #0] // store $reg6",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg6, [SP, #0] // restore $reg6",
+      "LDUR $reg5, [SP, #8] // restore $reg5",
+      "LDUR $reg4, [SP, #16] // restore $reg4",
+      "LDUR $reg3, [SP, #24] // restore $reg3",
+      "LDUR $reg2, [SP, #32] // restore $reg2",
+      "LDUR $reg1, [SP, #40] // restore $reg1",
+      "LDUR LR, [SP, #48] // restore LR",
+      "ADDI SP, SP, #56  // restore previous space on stack"
+    ],
+    "description": "Use this to save 7 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "stack manipulation with 7 registers": {
+    "prefix": "stk7",
+    "body": [
+      "// storing registers in stack before changing them",
+      "SUBI SP, SP, #64 // make room on stack (SP) for 2 registers",
+      "STUR LR, [SP, #56] // store return adress (LR) of procedure",
+      "STUR $reg1, [SP, #48] // store $reg1",
+      "STUR $reg2, [SP, #40] // store $reg2",
+      "STUR $reg3, [SP, #32] // store $reg3",
+      "STUR $reg4, [SP, #24] // store $reg4",
+      "STUR $reg5, [SP, #16] // store $reg5",
+      "STUR $reg6, [SP, #8] // store $reg6",
+      "STUR $reg7, [SP, #0] // store $reg7",
+      "// body of the procedure",
+      "$body",
+      "// restoring saved registers from stack",
+      "LDUR $reg7, [SP, #0] // restore $reg7",
+      "LDUR $reg6, [SP, #8] // restore $reg6",
+      "LDUR $reg5, [SP, #16] // restore $reg5",
+      "LDUR $reg4, [SP, #24] // restore $reg4",
+      "LDUR $reg3, [SP, #32] // restore $reg3",
+      "LDUR $reg2, [SP, #40] // restore $reg2",
+      "LDUR $reg1, [SP, #48] // restore $reg1",
+      "LDUR LR, [SP, #56] // restore LR",
+      "ADDI SP, SP, #64  // restore previous space on stack"
+    ],
+    "description": "Use this to save 8 registers in the Stack, including the return address of the procedure (where the procedure was called)"
+  },
+  "incremental for loop": {
+    "prefix": "for_incremental",
+    "body": [
+      "${1:loop name}_loop:",
+      "//comparing pointer to array length; if equal then exit",
+      "SUBS XZR, ${2:counter}, ${3:upper_limit}",
+      "B.GE ${1}_loop_exit",
+      "//loop body",
+      " ",
+      "// increment counter ($2) by $4",
+      "ADDI $3, $3, #${4:increment_amount}",
+      "B $1_loop",
+      "${1}_loop_exit:"
+    ],
+    "description": "Creates a for loop from counter to upper_limit. for (; counter < upper_limit; counter += increment_amount); Note: the counter and array size must be initialized before the loop."
+  },
+  "decremental for loop": {
+    "prefix": "for_decremental",
+    "body": [
+      "${1:loop name}:",
+      "//comparing pointer to 0; if equal then exit",
+      "CBZ ${2:counter}, ${3:exit loop} ",
+      "//loop body",
+      " ",
+      "// decrement pointer",
+      "SUBI $2, $2, #${4:Imt}",
+      "B $1",
+      "${3}:"
+    ],
+    "description": "Creates a for loop from Counter to 0. Note: the counter must be initialized before the loop"
+  },
+
+  "return statement": {
+    "prefix": "br",
+    "body": ["BR LR"],
+    "description": "returns to the caller (LR)"
+  },
+  "call procedure": {
+    "prefix": "bl",
+    "body": ["BL ${1:procedure name}"],
+    "description": "calls a procedure with the given name"
+  }
+}
