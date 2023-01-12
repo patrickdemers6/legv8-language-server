@@ -2,27 +2,27 @@
   "set register": {
     "prefix": "sreg",
     "body": ["ADD ${1:Rd}, XZR, ${2:Rm}", "$3"],
-    "description": "R[1] = R[2]. Set one register (Rd) to the value of another (Rm)."
+    "description": "R[d] = R[m]. Set one register (Rd) to the value of another (Rm)."
   },
   "increment register (immediate)": {
     "prefix": "addi",
-    "body": ["ADDI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
-    "description": "R[1] = R[1] + R[2] Increment one register (Rd) with the value (in bits) of the immediate (Imt)"
+    "body": ["ADDI ${1:Rd}, ${1:Rd}, #${2:Imm}", "$3"],
+    "description": "R[Rd] = R[Rd] + Imm. Increment the Rd register by the value of Imm"
   },
   "decrement register (immediate)": {
     "prefix": "subi",
-    "body": ["SUBI ${1:Rd}, ${1}, #${2:Imt}", "$3"],
-    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value (in bits) of the immediate (Imt)"
+    "body": ["SUBI ${1:Rd}, ${1:Rd}, #${2:Imm}", "$3"],
+    "description": "R[Rd] = R[Rd] + Imm. Decrement the Rd register by the value of Imm."
   },
   "increment register": {
     "prefix": "add",
-    "body": ["ADD ${1:Rd}, ${1}, ${2:Rm}", "$3"],
-    "description": "R[1] = R[1] + R[2]. Increment one register (Rd) with the value of another register (Rm)"
+    "body": ["ADD ${1:Rd}, ${1:Rd}, ${2:Rm}", "$3"],
+    "description": "R[Rd] = R[Rd] + R[Rm]. Increment one register (Rd) with the value of another register (Rm)."
   },
   "decrement register": {
     "prefix": "sub",
-    "body": ["SUB ${1:Rd}, ${1}, ${2:Rm}", "$3"],
-    "description": "R[1] = R[1] - R[2]. Decrement one register (Rd) with the value of another register (Rm)"
+    "body": ["SUB ${1:Rd}, ${1:Rd}, ${2:Rm}", "$3"],
+    "description": "R[Rd] = R[Rd] - R[Rm]. Decrement one register (Rd) with the value of another register (Rm). "
   },
 
   "stack manipulation with 1 register": {
@@ -189,7 +189,7 @@
       "//loop body",
       " ",
       "// increment counter ($2) by $4",
-      "ADDI $3, $3, #${4:increment_amount}",
+      "ADDI $2, $2, #${4:increment_amount}",
       "B $1_loop",
       "${1}_loop_exit:"
     ],
@@ -204,7 +204,7 @@
       "//loop body",
       " ",
       "// decrement pointer",
-      "SUBI $2, $2, #${4:decrement_amount}",
+      "SUBI $2, $2, #${3:decrement_amount}",
       "B ${1}_loop",
       "${1}_loop_exit:"
     ],
